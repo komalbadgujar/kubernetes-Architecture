@@ -98,5 +98,38 @@ It represents one or more containers that work together and share the same netwo
 
 ## 🔄 Pod Lifecycle in Kubernetes
 
-![Pod Lifecycle Diagram](lifecycle%20of%20pod%20img.png)
+![Pod Lifecycle Diagram](./lifecycle%20of%20pod.png)
 
+## Pod creation — Step-by-Step
+1) Pod created –
+You run a command like `` kubectl apply -f pod.yaml.``
+This request goes to the API Server.
+
+2) API Server saves the Pod info –
+The API Server checks your Pod details and saves them into etcd (the cluster database).
+
+3) Pod is waiting –
+The Pod now exists, but no node (machine) is chosen yet — it’s in the Pending state.
+
+4) Scheduler chooses a node –
+The Scheduler checks which node has enough resources and picks one for the Pod.
+Then it updates etcd with that information.
+
+5) Kubelet gets the Pod info –
+The Kubelet (agent running on the chosen node) sees that a new Pod must be created.
+
+6) Container image is downloaded –
+Kubelet tells the container runtime (like Docker) to pull the image from the registry.
+
+7) Container starts –
+The runtime runs the container (like using docker run).
+
+8) Pod status is updated –
+Kubelet tells the API Server that the Pod is now Running.
+
+9) Pod is ready to use –
+If everything works fine, the Pod is ready to receive traffic.
+
+10) Monitoring and updates –
+Kubelet keeps checking if the Pod is healthy.
+If the Pod stops or crashes, Kubelet can restart it.
